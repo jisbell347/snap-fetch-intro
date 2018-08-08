@@ -1,23 +1,29 @@
 
 function showText(responseAsText) {
-	return document.createElement(element);
+	const message = document.getElementById("placeholders");
+	message.textContent = responseAsText;
 }
-const url = 'https://jsonplaceholder.typicode.com/posts';
+function readResponseAsText(response) {
+	return response.text;
+}
 
-fetch(url)
-	.then((resp) => resp.json())
-	.then(function(data) {
-		let placeholders = data.results;
-		return placeholders.map(function(placeholder) {
-			let li = createNode("li"),
-				span = createNode("span");
-				li.innerHTML = `${placeholder.title}`;
-				span.innerHTML= `${placeholder.body}`;
-				append(li, span);
-				append(ul, li);
+function logError(error) {
+	console.log("Looks like there was a problem: \n", error);
+}
 
-		})
-	})
-	.catch(function(error) {
-		console.log(error);
-	});
+function validateResponse(response) {
+	if(!response.ok) {
+		throw Error(response.statusText);
+	}
+	return response;
+}
+
+function fetchText(pathToResource) {
+	fetch(pathToResource)
+		.then(validateResponse)
+		.then(readResponseAsText)
+		.then(showText)
+		.catch(logError);
+	}
+
+	fetchText("https://jsonplaceholder.typicode.com/posts");

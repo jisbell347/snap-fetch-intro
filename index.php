@@ -7,6 +7,6 @@
 	</head>
 	<body>
 		<h1>Placeholders</h1>
-		<ul id="placeholders"></ul>
+		<div id="placeholders"></div>
 	</body>
 </html>
